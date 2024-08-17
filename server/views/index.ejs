@@ -54,18 +54,26 @@
 
         const marker = {}
 
+        const marker_icon = L.icon({
+            iconUrl:"https://cdn2.iconfinder.com/data/icons/social-media-8/512/pointer.png",
+            iconSize: [40, 40], 
+            iconAnchor: [12, 41], 
+            popupAnchor: [1, -34], 
+            shadowSize: [41, 41] 
+        })
+
         socket.on("received", (data) => {
-            const {id, latitude, longitude} = data;
+            const { id, latitude, longitude } = data;
             map.setView([latitude, longitude], 16);
-            if(marker[id]){
+            if (marker[id]) {
                 marker[id].setLatLng([latitude, longitude]); //for updation of marker
-            }else{
-                marker[id] = L.marker([latitude, longitude]).addTo(map);    //for creation of marker
+            } else {
+                marker[id] = L.marker([latitude, longitude], {icon: marker_icon}).addTo(map).bindPopup(`User Id: ${id}`).openPopup();    //for creation of marker
             }
         })
 
-        socket.on("user_disconnected", (data)=>{
-            if(marker[data]){
+        socket.on("user_disconnected", (data) => {
+            if (marker[data]) {
                 map.removeLayer(marker[data]);
                 delete marker[data];
             }

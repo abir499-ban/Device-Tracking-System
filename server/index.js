@@ -2,20 +2,24 @@ const express = require('express');
 const { createServer } = require('http');
 const cors = require('cors');
 const { Server } = require('socket.io');
-const ejs = require('ejs');
-const path = require('path');
-const { Socket } = require('net');
 const app = express();
 const myserver = createServer(app);
-const io = new Server(myserver);
+const io = new Server(myserver,{
+    cors:{
+        origin:'http://localhost:5173',
+        methods:["GET", "POST"]
+    }
+});
 
 app.use(cors());
 
-app.set("view engine", "ejs");
-app.set("views", path.resolve('./views'))
+app.use(cors({
+    origin: 'http://localhost:5173',
+}))
+
 
 app.get('/', (req, res) => {
-    return res.render("index");
+    return res.end("hi");
 })
 
 
