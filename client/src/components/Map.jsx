@@ -57,7 +57,7 @@ const Map = (props) => {
             } else {
                 markersRef.current[id] = L.marker([latitude, longitude], { icon: markerIcon })
                     .addTo(mapInstance.current)
-                    .bindPopup(`User Name: ${props.name}`)
+                    .bindPopup(`${props.name}`)
                     .openPopup();
             }
         });
