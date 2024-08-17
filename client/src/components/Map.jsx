@@ -3,7 +3,7 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import io from 'socket.io-client';
 
-const Map = () => {
+const Map = (props) => {
     const mapRef = useRef(null);
     const markersRef = useRef({});
     const mapInstance = useRef(null); // Ref to store the map instance
@@ -57,7 +57,7 @@ const Map = () => {
             } else {
                 markersRef.current[id] = L.marker([latitude, longitude], { icon: markerIcon })
                     .addTo(mapInstance.current)
-                    .bindPopup(`User Id: ${id}`)
+                    .bindPopup(`User Name: ${props.name}`)
                     .openPopup();
             }
         });
