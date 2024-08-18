@@ -2,8 +2,11 @@ import React, { useEffect, useRef } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import io from 'socket.io-client';
+import { useLocation } from 'react-router-dom';
 
-const Map = (props) => {
+const Map = () => {
+    const location = useLocation();
+    const {name} = location.state || undefined;
     const mapRef = useRef(null);
     const markersRef = useRef({});
     const mapInstance = useRef(null); // Ref to store the map instance
@@ -57,7 +60,7 @@ const Map = (props) => {
             } else {
                 markersRef.current[id] = L.marker([latitude, longitude], { icon: markerIcon })
                     .addTo(mapInstance.current)
-                    .bindPopup(`${props.name}`)
+                    .bindPopup(`${name}`)
                     .openPopup();
             }
         });

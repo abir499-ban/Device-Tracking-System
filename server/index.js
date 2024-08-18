@@ -29,7 +29,7 @@ app.get('/', (req, res) => {
 app.post('/create', async(req,res)=>{
     const {name, email} = req.body;
     try {
-        fs.appendFileSync('sample.txt', `Name: ${name} and Email : ${email}`, (err, data)=>{
+        fs.appendFileSync('sample.txt', `Name: ${name} and Email : ${email} \n`, (err, data)=>{
             if(err){
                 console.log(err);
             }else{

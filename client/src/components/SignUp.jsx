@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Container, CssBaseline, FormControl, TextField, Button, Typography } from '@mui/material';
 import Map from './Map'
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [isSubmitted, setisSubmitted] = useState(false)
+    const navigate = useNavigate();
     // Function to handle form submission
     const handleSubmit = async(e) => {
         e.preventDefault(); // Prevent the default form submission behavior
@@ -26,12 +28,17 @@ const SignUp = () => {
         const res = await result.json();
         if(res === "ok"){
             setisSubmitted(true)
+            navigate('/map', {
+                state:{
+                    name: name,
+                }
+            })
         }
     }
 
     return (
         <>
-        {!isSubmitted ? (
+        
             <React.Fragment>
                 <CssBaseline />
                 <Container maxWidth="sm" sx={{height: '100vh' }}>
@@ -69,9 +76,7 @@ const SignUp = () => {
                     </form>
                 </Container>
             </React.Fragment>
-        ) :(
-            <Map name={name} />
-        )}
+         
         </>
     );
 }
